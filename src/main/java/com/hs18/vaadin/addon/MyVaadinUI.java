@@ -1,7 +1,6 @@
 package com.hs18.vaadin.addon;
  
 import com.hs18.vaadin.addon.graph.GraphJSComponent;
-import com.hs18.vaadin.addon.graph.GraphJSComponent.RECT_STYLE;
 import com.hs18.vaadin.addon.graph.listener.GraphJsLeftClickListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Label;
@@ -44,22 +43,31 @@ public class MyVaadinUI extends UI
 
 	private void prepareGraph(){
 		try {
-			graphJSComponent.addNode("fruits", "Fruits I Like", "level 1", "Example Tool Tip", null, null);//Give parent id as null for root node
-			graphJSComponent.addNode("watermelon", "Watermelon", "level 2", "Its a very juicy fruit.", null, "fruits");//first child of node with id fruits
-			graphJSComponent.addNode("mango", "Mango", "level 2", "Katrina Kaif's favourite.", null, "fruits");//second child of node with id fruits
-			graphJSComponent.addNode("apple", "Apple", "level 2", null, null, "fruits");//third child of node with id fruits
-			graphJSComponent.setNodeStyle("apple", RECT_STYLE.RED);
-			graphJSComponent.setNodeLabel("apple", "Red Apple");//changing label from apple to red apple
-			graphJSComponent.setNodeToolTip("apple", "One apple a day, keeps the doctor away");//Example, setting tooltip
+			graphJSComponent.addNode("fruits", "Fruits I Like", "level 1", null, null);//Give parent id as null for root node
+			graphJSComponent.getNodeProperties("fruits").put("title", "Fruits I Like"); 
+			graphJSComponent.addNode("watermelon", "Watermelon", "level 2", null, "fruits");//first child of node with id fruits
+			graphJSComponent.getNodeProperties("watermelon").put("title", "Its a very juicy fruit."); 
+			graphJSComponent.addNode("mango", "Mango", "level 2", null, "fruits");//second child of node with id fruits
+			graphJSComponent.getNodeProperties("mango").put("title", "Katrina Kaif's favourite."); 
+			graphJSComponent.addNode("apple", "Apple", "level 2", null, "fruits");//third child of node with id fruits
+			graphJSComponent.getNodeProperties("apple").put("title", "One apple a day, keeps the doctor away"); 
+			graphJSComponent.getNodeProperties("apple").put("fill", "#F00");
+			graphJSComponent.getNodeProperties("mango").put("fill", "yellow");
 			
-			graphJSComponent.addNode("5", "Hapoos", "level 3", "One of the best mangos", null, "mango");//child of mango node
-			graphJSComponent.addNode("6", "Green", "level 3", "Green from outside, red inside", null, "watermelon");//child of watermelon node
-			graphJSComponent.setNodeStyle("6", RECT_STYLE.GREEN);
+			graphJSComponent.addNode("5", "Hapoos", "level 3", null, "mango");//child of mango node
+			graphJSComponent.getNodeProperties("5").put("title", "One of the best mangos"); 
+			
+			graphJSComponent.addNode("6", "Green", "level 3", null, "watermelon");//child of watermelon node
+			graphJSComponent.getNodeProperties("6").put("title", "Green from outside, red inside"); 
+			graphJSComponent.getNodeProperties("6").put("fill", "#0F0");
 			
 			//Another Tree in the same graph
-			graphJSComponent.addNode("fruitsnotlike", "Fruits I Dont Like", "level 1", "Another tree in the same graph", null, null);//Give parent id as null
-			graphJSComponent.addNode("lichy", "Lichy", "level 2", "because its nto easy to eat it.", null, "fruitsnotlike");//first child of node with id fruitsnotlike
-			graphJSComponent.addNode("redlichy", "Red Lichy", "level 3", "red lichy", null, "lichy");
+			graphJSComponent.addNode("fruitsnotlike", "Fruits I Dont Like", "level 1",  null, null);//Give parent id as null
+			graphJSComponent.getNodeProperties("fruitsnotlike").put("title", "Another tree in the same graph"); 
+			graphJSComponent.addNode("lichy", "Lichy", "level 2", null, "fruitsnotlike");//first child of node with id fruitsnotlike
+			graphJSComponent.getNodeProperties("lichy").put("title", "because its nto easy to eat it."); 
+			graphJSComponent.addNode("redlichy", "Red Lichy", "level 3", null, "lichy");
+			graphJSComponent.getNodeProperties("redlichy").put("title",  "red lichy"); 
 			
 			graphJSComponent.refresh();//Call refresh after you are done with your changes
 		} catch (Exception e) {
