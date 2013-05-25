@@ -23,6 +23,7 @@ public class MyVaadinUI extends UI
         setContent(layout);
         
     	graphJSComponent = new GraphJSComponent();
+    	graphJSComponent.setNodesSize(120, 50);
 		graphJSComponent.setLeftClickListener(new GraphJsLeftClickListener() {
 			
 			@Override
